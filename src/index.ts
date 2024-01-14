@@ -2,7 +2,6 @@ import express from 'express';
 import mongoose from 'mongoose';
 import http from 'http';
 import cookieParser from 'cookie-parser';
-import compression from 'compression';
 import cors from 'cors';
 require('dotenv').config();
 
@@ -13,14 +12,12 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
-// app.use(compression);
 app.use(cookieParser());
 
 app.get('/', (req, res) => {
   res.json({ msg: 'hello world' }); 
 })
 
-mongoose.Promise = Promise;
 mongoose.connect(process.env.MONGO_URL);
 mongoose.connection.on('error', (error: Error) => console.log(error));
 
