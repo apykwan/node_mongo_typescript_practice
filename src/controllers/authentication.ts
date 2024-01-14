@@ -19,7 +19,9 @@ export const login = async (req: Request, res: Response) => {
     await user.save();
 
     res.cookie('test-auth', user.authentication.sessionToken, { domain: 'localhost', path: '/' });
-    user.authentication = null;
+    user = user.toObject();
+    delete user.authentication;
+    
     return res.status(200).json(user).end();
   } catch (error) {
     console.log(error);

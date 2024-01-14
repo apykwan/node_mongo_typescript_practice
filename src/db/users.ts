@@ -1,4 +1,14 @@
-import { Schema, model } from 'mongoose';
+import { Schema, model, Document } from 'mongoose';
+
+interface UserDocument extends Document {
+  email: string;
+  username: string;
+  authentication: {
+    password: string;
+    salt: string;
+    sessionToken: string;
+  }
+}
 
 const UserSchema = new Schema({
   email: { 
@@ -25,7 +35,7 @@ const UserSchema = new Schema({
   },
 });
 
-export const UserModel = model('user', UserSchema);
+export const UserModel = model<UserDocument>('user', UserSchema);
 
 export const getUsers = () => UserModel.find();
 export const getUserByEmail = (email: string) => UserModel.findOne({ email });
